@@ -23,6 +23,7 @@ nmap <c-c> :.w !pbcopy<CR><CR>
 vmap <c-c> :w !pbcopy<CR><CR>
 nmap <s-u> :red<CR>
 vmap r "_dP
+map <c-g> :vimgrep /<C-R>"/gj ./**/*.%:e
 set clipboard=unnamed
 
 set cursorline
