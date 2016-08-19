@@ -19,8 +19,6 @@ set pastetoggle=<f2>
 nnoremap v <c-v>
 nmap <c-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 imap <c-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-nmap <c-c> :.w !pbcopy<CR><CR>
-vmap <c-c> :w !pbcopy<CR><CR>
 nmap <s-u> :red<CR>
 vmap r "_dP
 map <c-g> :vimgrep /<C-R>"/gj ./**/*.%:e
