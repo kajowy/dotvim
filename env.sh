@@ -33,3 +33,6 @@ if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l | grep "The agent has no identities" && ssh-add
+export GOPATH=/Users/kaj/go
+export PATH=$GOPATH/bin:$PATH:/usr/local/go/bin
+source /usr/local/bin/virtualenvwrapper.sh

@@ -1,7 +1,23 @@
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
-# Set name of the theme to load.
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US:en
+export LC_CTYPE=en_US.UTF-8
+export LC_NUMERIC="en_US.UTF-8"
+export LC_TIME="en_US.UTF-8"
+export LC_COLLATE="en_US.UTF-8"
+export LC_MONETARY="en_US.UTF-8"
+export LC_MESSAGES="en_US.UTF-8"
+export LC_PAPER="en_US.UTF-8"
+export LC_NAME="en_US.UTF-8"
+export LC_ADDRESS="en_US.UTF-8"
+export LC_TELEPHONE="en_US.UTF-8"
+export LC_MEASUREMENT="en_US.UTF-8"
+export LC_IDENTIFICATION="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+#Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
@@ -85,3 +101,6 @@ source $ZSH/oh-my-zsh.sh
 #alias vim="/usr/local/bin/vim"
 #alias vi="/usr/local/bin/vim"
 source ~/.env.sh
+
+export NVM_DIR="/Users/kaj/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

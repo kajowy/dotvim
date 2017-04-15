@@ -176,3 +176,5 @@ nnoremap <space>gb :Git branch<Space>
 nnoremap <space>go :Git checkout<Space>
 nnoremap <space>gps :Dispatch! git push<CR>
 nnoremap <space>gpl :Dispatch! git pull<CR>
+
+autocmd FileType crontab setlocal nowritebackup
