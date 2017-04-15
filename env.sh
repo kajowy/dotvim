@@ -2,6 +2,7 @@
 
 # PATH
 export PATH="/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH=$PATH:/usr/local/go/bin
 export EDITOR='vi'
 # export PYTHONPATH=$PYTHONPATH
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -36,3 +37,16 @@ ssh-add -l | grep "The agent has no identities" && ssh-add
 export GOPATH=/Users/kaj/go
 export PATH=$GOPATH/bin:$PATH:/usr/local/go/bin
 source /usr/local/bin/virtualenvwrapper.sh
+
+# Filesystem
+alias ..='cd ..'            # Go up one directory
+alias ...='cd ../..'        # Go up two directories
+alias ....='cd ../../..'    # And for good measure
+alias ls='ls --color=auto'  # gimmie colors
+alias l='ls -lah --color=auto'   # Long view, show hidden
+alias la='ls -AF --color=auto'   # Compact view, show hidden
+alias ll='ls -lFh --color=auto'  # Long view, no hidden
+
+if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
+  . ~/.config/exercism/exercism_completion.zsh
+fi
