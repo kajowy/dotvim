@@ -42,10 +42,6 @@ source /usr/local/bin/virtualenvwrapper.sh
 alias ..='cd ..'            # Go up one directory
 alias ...='cd ../..'        # Go up two directories
 alias ....='cd ../../..'    # And for good measure
-alias ls='ls --color=auto'  # gimmie colors
-alias l='ls -lah --color=auto'   # Long view, show hidden
-alias la='ls -AF --color=auto'   # Compact view, show hidden
-alias ll='ls -lFh --color=auto'  # Long view, no hidden
 
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   . ~/.config/exercism/exercism_completion.zsh
