@@ -104,3 +104,6 @@ source ~/.env.sh
 
 export NVM_DIR="/Users/kaj/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="/opt/local/bin/:$PATH"

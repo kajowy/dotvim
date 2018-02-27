@@ -7,13 +7,68 @@ autocmd! bufwritepost .vimrc source %
 filetype off
 filetype plugin indent on
 
-call pathogen#infect()
-call  pathogen#helptags()
 
 syntax on
 
+call plug#begin('~/.config/nvim/plugged')
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'fatih/vim-go', { 'tag': '*' }
+Plug 'mileszs/ack.vim'
+Plug 'kien/ctrlp.vim'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'sebdah/vim-delve'
+Plug 'w0rp/ale'
+Plug 'majutsushi/tagbar'
+Plug 'vim-airline/vim-airline'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+call plug#end()
+
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+
+let g:go_fmt_command = "goimports"
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_auto_sameids = 1
+let g:go_auto_type_info = 1
+let g:go_addtags_transform = "snakecase"
+
+call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+" Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 1
+
+au FileType go nmap <leader>gt :GoDeclsDir<cr>
+au FileType go nmap <leader>gd <Plug>(go-def)
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
 set mouse=a
-set ttymouse=xterm2
 set pastetoggle=<f2>
 
 nnoremap v <c-v>
@@ -21,7 +76,9 @@ nmap <c-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 imap <c-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <s-u> :red<CR>
 vmap r "_dP
-map <c-g> :vimgrep /<C-R>"/gj ./**/*.%:e
+map <c-g> :Ack '<C-R>' ./**/*.%:e
+tnoremap <Esc> <C-\><C-n>
+
 set clipboard=unnamed
 
 set cursorline
@@ -54,12 +111,6 @@ set noswapfile
 " Colors and transparency
 
 colo wombat256
-
-if has('gui_macvim')
-    set guioptions=egmrt
-"	set transparency=2
-endif
-
 if &term =~ "xterm.*"
 	let &t_ti = &t_ti . "\e[?2004h"
 	let &t_te = "\e[?2004l" . &t_te
@@ -155,10 +206,6 @@ au FileType htmldjango set omnifunc=htmldjangocomplete#CompleteDjango
 
 let mapleader = ','
 
-map <leader>gb :call Send_to_Tmux("git blame -L " . line(".") . "," . line(".") . " " . expand("%") . " \| fold -sw 180\n")<CR>
-map <leader>gd :call Send_to_Tmux_and_Expand("git diff\n")<CR>
-map <leader>gl :call Send_to_Tmux_and_Expand("git log\n")<CR>
-map <leader>gs :call Send_to_Tmux("git status\n")<CR>
 set tags=tags;/
 " fugitive git bindings
 nnoremap <space>ga :Git add %:p<CR><CR>
@@ -178,3 +225,6 @@ nnoremap <space>gps :Dispatch! git push<CR>
 nnoremap <space>gpl :Dispatch! git pull<CR>
 
 autocmd FileType crontab setlocal nowritebackup
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif

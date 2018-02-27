@@ -36,6 +36,7 @@ export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l | grep "The agent has no identities" && ssh-add
 export GOPATH=/Users/kaj/go
 export PATH=$GOPATH/bin:$PATH:/usr/local/go/bin
+export PKG_CONFIG_PATH=/usr/local/Cellar/zeromq/4.2.3/lib/pkgconfig
 source /usr/local/bin/virtualenvwrapper.sh
 
 # Filesystem
@@ -45,8 +46,10 @@ alias ....='cd ../../..'    # And for good measure
 alias l='ls -lah'   # Long view, show hidden
 alias la='ls -AF'   # Compact view, show hidden
 alias ll='ls -lFh'  # Long view, no hidden
+alias ctags="`brew --prefix`/bin/ctags"
 
 
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   . ~/.config/exercism/exercism_completion.zsh
 fi
+source $HOME/.cargo/env
