@@ -29,12 +29,14 @@ Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
@@ -51,6 +53,7 @@ let g:go_highlight_types = 1
 let g:go_auto_sameids = 1
 let g:go_auto_type_info = 1
 let g:go_addtags_transform = "snakecase"
+let g:go_fmt_fail_silently=1
 
 call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
 " Error and warning signs.
@@ -58,9 +61,12 @@ let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 
 au FileType go nmap <leader>gt :GoDeclsDir<cr>
 au FileType go nmap <leader>gd <Plug>(go-def)
+au FileType go nmap <leader>gh :GoDoc<cr>
 
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -76,7 +82,7 @@ nmap <c-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 imap <c-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <s-u> :red<CR>
 vmap r "_dP
-map <c-g> :Ack '<C-R>' ./**/*.%:e
+map <c-g> :Ack '<C-R>"' ./**/*.%:e
 tnoremap <Esc> <C-\><C-n>
 
 set clipboard=unnamed
