@@ -3,6 +3,18 @@
 set nocompatible
 
 autocmd! bufwritepost .vimrc source %
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
+autocmd FileType html noremap <leader>f :call HtmlBeautify()<cr>
+autocmd FileType json noremap <leader>f :call JsonBeautify()<cr>
+autocmd FileType css noremap <leader>f :call CSSBeautify()<cr>
+autocmd FileType javascript noremap <leader>f :call JsBeautify()<cr>
+
 
 filetype off
 filetype plugin indent on
@@ -18,6 +30,7 @@ Plug 'kien/ctrlp.vim'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
+  Plug 'Shougo/vimshell'
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
@@ -33,6 +46,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'jiangmiao/auto-pairs'
+Plug 'maksimr/vim-jsbeautify'
 call plug#end()
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -74,6 +88,7 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
+set completeopt=longest,menuone
 set mouse=a
 set pastetoggle=<f2>
 
