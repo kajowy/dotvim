@@ -75,8 +75,8 @@ let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
 
 au FileType go nmap <leader>gt :GoDeclsDir<cr>
 au FileType go nmap <leader>gd <Plug>(go-def)
@@ -97,7 +97,7 @@ nmap <c-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 imap <c-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <s-u> :red<CR>
 vmap r "_dP
-map <c-g> :Ack '<C-R>"' ./**/*.%:e
+map <c-g> :Ack -G \.%:e$ '<C-R>"'
 tnoremap <Esc> <C-\><C-n>
 
 set clipboard=unnamed
