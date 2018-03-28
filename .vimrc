@@ -23,10 +23,6 @@ filetype plugin indent on
 syntax on
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'fatih/vim-go', { 'tag': '*' }
-Plug 'mileszs/ack.vim'
-Plug 'kien/ctrlp.vim'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -35,18 +31,24 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'w0rp/ale'
-Plug 'majutsushi/tagbar'
-Plug 'vim-airline/vim-airline'
-Plug 'rbgrouleff/bclose.vim'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'jiangmiao/auto-pairs'
+Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'mileszs/ack.vim'
+Plug 'radenling/vim-dispatch-neovim'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'w0rp/ale'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
 call plug#end()
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
