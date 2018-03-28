@@ -46,6 +46,7 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'jiangmiao/auto-pairs'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'tpope/vim-obsession'
 call plug#end()
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
