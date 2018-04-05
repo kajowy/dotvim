@@ -3,7 +3,8 @@
 # PATH
 export PATH="/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH=$PATH:/usr/local/go/bin
-export EDITOR='vi'
+export VISUAL=nvim
+export EDITOR="$VISUAL"
 # export PYTHONPATH=$PYTHONPATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
