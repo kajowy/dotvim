@@ -13,12 +13,13 @@ autocmd FileType go nmap <Leader>i <Plug>(go-info)
 autocmd FileType html noremap <leader>f :call HtmlBeautify()<cr>
 autocmd FileType json noremap <leader>f :call JsonBeautify()<cr>
 autocmd FileType css noremap <leader>f :call CSSBeautify()<cr>
+autocmd FileType css noremap <leader>c :VCoolor<cr>
 autocmd FileType javascript noremap <leader>f :call JsBeautify()<cr>
+"autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 
 
 filetype off
 filetype plugin indent on
-
 
 syntax on
 
@@ -31,9 +32,11 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'dhruvasagar/vim-prosession'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'airblade/vim-gitgutter'
+Plug 'dhruvasagar/vim-prosession'
 Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'kien/ctrlp.vim'
@@ -46,17 +49,46 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'pangloss/vim-javascript'
+Plug 'maksimr/vim-jsbeautify'
+Plug 'mxw/vim-jsx'
+Plug 'mattn/emmet-vim'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'wokalski/autocomplete-flow'
+Plug 'KabbAmine/vCoolor.vim'
+Plug 'maksimr/vim-jsbeautify'
 call plug#end()
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
+let g:user_emmet_leader_key='<Tab>'
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
+
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
 
 let g:go_fmt_command = "goimports"
 let g:go_highlight_build_constraints = 1
@@ -72,14 +104,24 @@ let g:go_auto_type_info = 1
 let g:go_addtags_transform = "snakecase"
 let g:go_fmt_fail_silently=1
 
-call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
 " Error and warning signs.
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 " Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
+let g:ale_linters = {
+\  'javascript': ['eslint'],
+\  'jsx': ['eslint']
+\}
+let g:ale_fixers = {
+\  'javascript': ['eslint'],
+\  'jsx': ['eslint']
+\}
+
+let g:neosnippet#enable_completed_snippet = 1
 
 au FileType go nmap <leader>gt :GoDeclsDir<cr>
 au FileType go nmap <leader>gd <Plug>(go-def)
@@ -170,6 +212,7 @@ nnoremap tp :tabp<cr>
 " CTRL-P Setup
 
 let g:ctrlp_max_height = 20
+let g:ctrlp_working_path_mode = 0
 set wildignore+=*.pyc
 set wildignore+=*build/*
 set wildignore+=*dist/*
