@@ -32,19 +32,15 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'airblade/vim-gitgutter'
-Plug 'dhruvasagar/vim-prosession'
 Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'jiangmiao/auto-pairs'
-Plug 'kien/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'mileszs/ack.vim'
 Plug 'radenling/vim-dispatch-neovim'
-Plug 'rbgrouleff/bclose.vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
@@ -60,14 +56,36 @@ Plug 'mxw/vim-jsx'
 Plug 'mattn/emmet-vim'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'wokalski/autocomplete-flow'
-Plug 'KabbAmine/vCoolor.vim'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'dhruvasagar/vim-prosession'
+Plug 'skwp/vim-html-escape'
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+"Plug 'ervandew/supertab'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'ap/vim-css-color'
+Plug 'rhysd/vim-grammarous'
+Plug 'Valloric/MatchTagAlways'
+Plug 'junegunn/gv.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'tpope/vim-repeat'
+Plug 'mhinz/vim-sayonara'
+Plug 'honza/vim-snippets'
+Plug 'MartinLafreniere/vim-PairTools'
+Plug 'sjl/vitality.vim'
+Plug 'sjl/gundo.vim'
+Plug 'Quramy/vison'
+Plug 'ryanoasis/vim-devicons'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 call plug#end()
 
+map <c-p> :FZF<cr>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-let g:user_emmet_leader_key='<Tab>'
 let g:user_emmet_settings = {
   \  'javascript.jsx' : {
     \      'extends' : 'jsx',
@@ -75,20 +93,21 @@ let g:user_emmet_settings = {
   \}
 
 let g:deoplete#enable_at_startup = 1
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
+"if !exists('g:deoplete#omni#input_patterns')
+"  let g:deoplete#omni#input_patterns = {}
+"endif
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " omnifuncs
 augroup omnifuncs
-  autocmd!
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
+
+let g:gundo_preview_bottom = 1
 
 let g:go_fmt_command = "goimports"
 let g:go_highlight_build_constraints = 1
@@ -138,6 +157,7 @@ set mouse=a
 set pastetoggle=<f2>
 
 nnoremap v <c-v>
+nnoremap <F5> :GundoToggle<CR>
 nmap <c-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 imap <c-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <s-u> :red<CR>
@@ -146,6 +166,8 @@ map <c-g> :Ack -G \.%:e$ '<C-R>"'
 tnoremap <Esc> <C-\><C-n>
 
 set clipboard=unnamed
+set undofile
+set undodir="$HOME/.VIM_UNDO_FILES"
 
 set cursorline
 set tabpagemax=80
@@ -202,7 +224,7 @@ match WhitespaceEOL /\s\+$/
 
 nnoremap bn :bn<cr>
 nnoremap bp :bp<cr>
-nnoremap bd :Bclose<cr>
+nnoremap bd :Sayonara<cr>
 
 " Tab navigation
 
@@ -218,7 +240,6 @@ set wildignore+=*build/*
 set wildignore+=*dist/*
 set wildignore+=*.egg-info/*
 set wildignore+=*/coverage/*
-map <c-r> :CtrlPClearCache<cr>
 
 " NETRW Setup
 
@@ -269,7 +290,6 @@ map <f1> :NERDTreeToggle<cr>
 let NERDTreeQuitOnOpen=1
 let g:syntastic_python_checkers=['flake8', 'pyflakes']
 let g:syntastic_python_checker_args="--max-line-lenght=120"
-au FileType htmldjango set omnifunc=htmldjangocomplete#CompleteDjango
 
 let mapleader = ','
 
@@ -295,3 +315,6 @@ autocmd FileType crontab setlocal nowritebackup
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+let g:deoplete#sources#ternjs#docs = 1
+let g:deoplete#sources#ternjs#types = 1

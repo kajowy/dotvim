@@ -27,7 +27,7 @@ alias cppcompile='c++ -std=c++11 -stdlib=libc++'
 
 # Use sublimetext for editing config files
 alias zshconfig="vi ~/.zshrc"
-alias envconfig="vi ~/env.sh"
+alias envconfig="vi ~/.env.sh"
 
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then
   eval `ssh-agent`
@@ -35,10 +35,11 @@ if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l | grep "The agent has no identities" && ssh-add
-export GOPATH=/Users/kaj/go
+export GOPATH=~/
 export PATH=$GOPATH/bin:$PATH:/usr/local/go/bin
 export PKG_CONFIG_PATH=/usr/local/Cellar/zeromq/4.2.3/lib/pkgconfig
 source /usr/local/bin/virtualenvwrapper.sh
+source $HOME/.cargo/env
 
 # Filesystem
 alias ..='cd ..'            # Go up one directory
@@ -49,11 +50,6 @@ alias la='ls -AF'   # Compact view, show hidden
 alias ll='ls -lFh'  # Long view, no hidden
 alias ctags="`brew --prefix`/bin/ctags"
 
-
-if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
-  . ~/.config/exercism/exercism_completion.zsh
-fi
-source $HOME/.cargo/env
 
 # ANDROID STUFF
 # Create a JAVA_HOME variable, determined dynamically
