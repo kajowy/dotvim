@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 # PATH
+export GOBIN='/usr/local/go/bin'
 export PATH="/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH=$PATH:/usr/local/go/bin
 export VISUAL=nvim
