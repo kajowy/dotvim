@@ -16,10 +16,11 @@ autocmd FileType css noremap <leader>f :call CSSBeautify()<cr>
 autocmd FileType css noremap <leader>c :VCoolor<cr>
 autocmd FileType javascript noremap <leader>f :call JsBeautify()<cr>
 "autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
+autocmd FileType netrw setl bufhidden=delete
 
 
 filetype off
-filetype plugin indent on
+"filetype plugin indent on
 
 syntax on
 
@@ -32,54 +33,62 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+"Plug 'ervandew/supertab'
+"Plug 'luochen1990/indent-detector.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'MartinLafreniere/vim-PairTools'
+Plug 'Quramy/vison'
+Plug 'Shougo/denite.nvim'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'Valloric/MatchTagAlways'
 Plug 'airblade/vim-gitgutter'
+Plug 'ap/vim-css-color'
+Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'fatih/vim-go', { 'tag': '*' }
+Plug 'hail2u/vim-css3-syntax'
+Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/gv.vim'
 Plug 'majutsushi/tagbar'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'mattn/emmet-vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'mhinz/vim-sayonara'
 Plug 'mileszs/ack.vim'
+Plug 'mxw/vim-jsx'
+Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'pangloss/vim-javascript'
 Plug 'radenling/vim-dispatch-neovim'
+Plug 'rhysd/vim-grammarous'
+Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'sjl/gundo.vim'
+Plug 'sjl/vitality.vim'
+Plug 'skwp/vim-html-escape'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install', 'for': ['javascript', 'javascript.jsx'] }
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'pangloss/vim-javascript'
-Plug 'maksimr/vim-jsbeautify'
-Plug 'mxw/vim-jsx'
-Plug 'mattn/emmet-vim'
-Plug 'skywind3000/asyncrun.vim'
 Plug 'wokalski/autocomplete-flow'
-Plug 'maksimr/vim-jsbeautify'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'dhruvasagar/vim-prosession'
-Plug 'skwp/vim-html-escape'
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-"Plug 'ervandew/supertab'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'ap/vim-css-color'
-Plug 'rhysd/vim-grammarous'
-Plug 'Valloric/MatchTagAlways'
-Plug 'junegunn/gv.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'tpope/vim-repeat'
-Plug 'mhinz/vim-sayonara'
-Plug 'honza/vim-snippets'
-Plug 'MartinLafreniere/vim-PairTools'
-Plug 'sjl/vitality.vim'
-Plug 'sjl/gundo.vim'
-Plug 'Quramy/vison'
-Plug 'ryanoasis/vim-devicons'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'chriskempson/base16-vim'
+Plug 'martinda/Jenkinsfile-vim-syntax'
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+      \ 'do': 'yarn install',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 call plug#end()
 
 map <c-p> :FZF<cr>
@@ -87,10 +96,10 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-    \      'extends' : 'jsx',
-    \  },
-  \}
+      \  'javascript.jsx' : {
+      \      'extends' : 'jsx',
+      \  },
+      \}
 
 let g:deoplete#enable_at_startup = 1
 "if !exists('g:deoplete#omni#input_patterns')
@@ -132,13 +141,13 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_linters = {
-\  'javascript': ['eslint'],
-\  'jsx': ['eslint']
-\}
+      \  'javascript': ['eslint'],
+      \  'jsx': ['eslint']
+      \}
 let g:ale_fixers = {
-\  'javascript': ['eslint'],
-\  'jsx': ['eslint']
-\}
+      \  'javascript': ['eslint'],
+      \  'jsx': ['eslint']
+      \}
 
 let g:neosnippet#enable_completed_snippet = 1
 
@@ -173,9 +182,9 @@ set cursorline
 set tabpagemax=80
 set nowrap
 
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set shiftround
 set expandtab
 
@@ -197,20 +206,21 @@ set noswapfile
 " let &colorcolumn=join(range(81,999),",")
 
 " Colors and transparency
+let base16colorspace=256
+colors base16-eighties
 
-colo wombat256
 if &term =~ "xterm.*"
-	let &t_ti = &t_ti . "\e[?2004h"
-	let &t_te = "\e[?2004l" . &t_te
-	function! XTermPasteBegin(ret)
-		set pastetoggle=<Esc>[201~
-		set paste
-		return a:ret
-	endfunction
-	map <expr> <Esc>[200~ XTermPasteBegin("i")
-	imap <expr> <Esc>[200~ XTermPasteBegin("")
-	cmap <Esc>[200~ <nop>
-	cmap <Esc>[201~ <nop>
+  let &t_ti = &t_ti . "\e[?2004h"
+  let &t_te = "\e[?2004l" . &t_te
+  function! XTermPasteBegin(ret)
+    set pastetoggle=<Esc>[201~
+    set paste
+    return a:ret
+  endfunction
+  map <expr> <Esc>[200~ XTermPasteBegin("i")
+  imap <expr> <Esc>[200~ XTermPasteBegin("")
+  cmap <Esc>[200~ <nop>
+  cmap <Esc>[201~ <nop>
 endif
 
 " (No)Highlight search and whitespaces at the end of line
@@ -243,10 +253,10 @@ set wildignore+=*/coverage/*
 
 " NETRW Setup
 
-let g:netrw_browse_split=3
-let g:netrw_liststyle=1
-let g:netrw_banner=0
-let g:netrw_altv=1
+"let g:netrw_browse_split=3
+"let g:netrw_liststyle=1
+"let g:netrw_banner=0
+"let g:netrw_altv=1
 
 " AirLine Setup
 
@@ -259,7 +269,7 @@ let g:airline#extensions#bufferline#overwrite_variables=1
 let g:airline#extensions#syntastic#enabled=1
 let g:airline#extensions#tagbar#enabled=1
 let g:airline#extensions#csv#enabled=1
-let g:airline_theme="wombat"
+let g:airline_theme="base16"
 let g:airline#extensions#tabline#enabled=1
 
 let g:bufferline_echo=0
@@ -274,13 +284,13 @@ map <f3> :!ctags -R .<cr>
 
 " go to defn of tag under the cursor
 fun! MatchCaseTag()
-    let ic = &ic
-    set noic
-    try
-        exe 'tjump ' . expand('<cword>')
-    finally
-       let &ic = ic
-    endtry
+  let ic = &ic
+  set noic
+  try
+    exe 'tjump ' . expand('<cword>')
+  finally
+    let &ic = ic
+  endtry
 endfun
 nnoremap <silent> <c-]> :call MatchCaseTag()<cr>
 
@@ -293,10 +303,10 @@ let g:syntastic_python_checker_args="--max-line-lenght=120"
 
 let mapleader = ','
 
-set tags=tags;/
+set tags=tags,./tags
 " fugitive git bindings
 nnoremap <space>ga :Git add %:p<CR><CR>
-nnoremap <space>gs :Gstatus<CR>
+nnoremap <space>gs :Gstatus<CR><c-w>k<c-w>K
 nnoremap <space>gc :Gcommit -v -q<CR>
 nnoremap <space>gt :Gcommit -v -q %:p<CR>
 nnoremap <space>gd :Gdiff<CR>

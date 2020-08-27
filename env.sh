@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 # PATH
-export GOBIN='/usr/local/go/bin'
-export PATH="/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-export PATH=$PATH:/usr/local/go/bin
+export GOBIN='/Users/kaj/bin'
+export PATH="/usr/local/go/bin:/usr/local/opt/python/libexec/bin:$PATH"
+export PATH="/usr/local/bin:/Library/TeX/texbin/:/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 # export PYTHONPATH=$PYTHONPATH
@@ -27,15 +27,16 @@ function mkcd() { mkdir -p "$@" && cd "$_"; }
 alias cppcompile='c++ -std=c++11 -stdlib=libc++'
 
 # Use sublimetext for editing config files
-alias zshconfig="vi ~/.zshrc"
-alias envconfig="vi ~/.env.sh"
+alias zshconfig="nvim ~/.zshrc"
+alias envconfig="nvim ~/.env.sh"
+alias vimconfig="nvim ~/.vim/.vimrc"
 
-if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-  eval `ssh-agent`
-  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-fi
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-ssh-add -l | grep "The agent has no identities" && ssh-add
+#if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+#  eval `ssh-agent`
+#  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+#fi
+#export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+#ssh-add -l | grep "The agent has no identities" && ssh-add
 export GOPATH=~/
 export PATH=$GOPATH/bin:$PATH:/usr/local/go/bin
 export PKG_CONFIG_PATH=/usr/local/Cellar/zeromq/4.2.3/lib/pkgconfig

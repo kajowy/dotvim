@@ -100,12 +100,41 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #alias vim="/usr/local/bin/vim"
 #alias vi="/usr/local/bin/vim"
+alias g="git"
+alias vi="nvim"
+alias vim="nvim"
+alias top="top -o cpu"
 source ~/.env.sh
 
 export NVM_DIR="/Users/kaj/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
-export PATH="/usr/local/opt/openssl/bin:$PATH"
+#export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/opt/local/bin/:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
+
+if [ $commands[kubectl] ]; then
+  source <(kubectl completion zsh)
+fi
+
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export GOROOT=/usr/local/opt/go/libexec
+eval $(thefuck --alias)
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/kaj/src/odzyskator-go/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/kaj/src/odzyskator-go/node_modules/tabtab/.completions/slss.zsh
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" 
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
