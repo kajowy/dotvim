@@ -1,9 +1,7 @@
 #!/bin/zsh
 
 # PATH
-export GOBIN='/Users/kaj/bin'
 export PATH="/usr/local/go/bin:/usr/local/opt/python/libexec/bin:$PATH"
-export PATH="/usr/local/bin:/Library/TeX/texbin/:/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 # export PYTHONPATH=$PYTHONPATH
@@ -37,11 +35,6 @@ alias vimconfig="nvim ~/.vim/.vimrc"
 #fi
 #export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 #ssh-add -l | grep "The agent has no identities" && ssh-add
-export GOPATH=~/
-export PATH=$GOPATH/bin:$PATH:/usr/local/go/bin
-export PKG_CONFIG_PATH=/usr/local/Cellar/zeromq/4.2.3/lib/pkgconfig
-source /usr/local/bin/virtualenvwrapper.sh
-source $HOME/.cargo/env
 
 # Filesystem
 alias ..='cd ..'            # Go up one directory
@@ -50,16 +43,8 @@ alias ....='cd ../../..'    # And for good measure
 alias l='ls -lah'   # Long view, show hidden
 alias la='ls -AF'   # Compact view, show hidden
 alias ll='ls -lFh'  # Long view, no hidden
-alias ctags="`brew --prefix`/bin/ctags"
 
 
-# ANDROID STUFF
-# Create a JAVA_HOME variable, determined dynamically
-export JAVA_HOME=$(/usr/libexec/java_home)
-# Add that to the global PATH variable
-export PATH=${JAVA_HOME}/bin:$PATH
-# Set Android_HOME
-export ANDROID_HOME=~/Library/Android/sdk/
-# Add the Android SDK to the ANDROID_HOME variable
-export PATH=$ANDROID_HOME/platform-tools:$PATH
-export PATH=$ANDROID_HOME/tools:$PATH
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

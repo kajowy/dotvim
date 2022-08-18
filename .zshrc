@@ -17,6 +17,10 @@ export LC_MEASUREMENT="en_US.UTF-8"
 export LC_IDENTIFICATION="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
+export HISTFILE=~/.zsh_history
+export SAVEHIST=1000000000
+export HISTSIZE=1000000000
+
 #Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -56,7 +60,7 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+#HIST_STAMPS="dd.mm.yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -65,13 +69,13 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting)
+plugins=(git colorize github jira vagrant virtualenv pip python brew osx iterm2)
 
 # User configuration
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
-
+export PATH=$PATH:/usr/local/go/bin
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -100,17 +104,16 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #alias vim="/usr/local/bin/vim"
 #alias vi="/usr/local/bin/vim"
+alias k="kubectl"
 alias g="git"
 alias vi="nvim"
 alias vim="nvim"
 alias top="top -o cpu"
 source ~/.env.sh
 
-export NVM_DIR="/Users/kaj/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
+#export NVM_DIR="/Users/kaj/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 #export PATH="/usr/local/opt/openssl/bin:$PATH"
-export PATH="/opt/local/bin/:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -131,10 +134,15 @@ if [ $commands[kubectl] ]; then
 fi
 
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-export GOROOT=/usr/local/opt/go/libexec
-eval $(thefuck --alias)
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /Users/kaj/src/odzyskator-go/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/kaj/src/odzyskator-go/node_modules/tabtab/.completions/slss.zsh
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" 
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+eval "$(/opt/homebrew/bin/brew shellenv)"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/kaj/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kaj/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/kaj/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kaj/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+complete -F __start_kubectl k
