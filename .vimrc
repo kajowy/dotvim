@@ -1,5 +1,6 @@
 " Setup
 
+let g:python3_host_prog = "/Users/kaj/.venvs/nvim/bin/python"
 set nocompatible
 
 if !exists('g:vscode')
@@ -22,13 +23,14 @@ if !exists('g:vscode')
 
   call plug#begin('~/.config/nvim/plugged')
   if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   else
     Plug 'Shougo/vimshell'
     Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
+  Plug 'madox2/vim-ai'
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
   "Plug 'ervandew/supertab'
   "Plug 'luochen1990/indent-detector.vim'
@@ -308,9 +310,9 @@ if !exists('g:vscode')
   set tags=tags,./tags
   " fugitive git bindings
   nnoremap <space>ga :Git add %:p<CR><CR>
-  nnoremap <space>gs :Gstatus<CR><c-w>k<c-w>K
-  nnoremap <space>gc :Gcommit -v -q<CR>
-  nnoremap <space>gt :Gcommit -v -q %:p<CR>
+  nnoremap <space>gs :Git<CR><c-w>k<c-w>K
+  nnoremap <space>gc :Git commit -v -q<CR>
+  nnoremap <space>gt :Git commit -v -q %:p<CR>
   nnoremap <space>gd :Gdiff<CR>
   nnoremap <space>ge :Gedit<CR>
   nnoremap <space>gr :Gread<CR>

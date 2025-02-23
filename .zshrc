@@ -69,13 +69,13 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colorize github jira vagrant virtualenv pip python brew osx iterm2)
+plugins=(git colorize github jira vagrant virtualenv pip python brew macos iterm2)
 
 # User configuration
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
-export PATH=$PATH:/usr/local/go/bin
+export PATH=/opt/homebrew/bin:$PATH:/opt/homebrew/bin
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -109,11 +109,18 @@ alias g="git"
 alias vi="nvim"
 alias vim="nvim"
 alias top="top -o cpu"
+alias kdev="kubectl --context=arn:aws:eks:us-east-2:703198869937:cluster/dev"
+alias kgreen="kubectl --context=arn:aws:eks:us-west-2:629432362190:cluster/prod-green"
+alias kblue="kubectl --context=arn:aws:eks:us-east-2:629432362190:cluster/prod"
+alias kstone="kubectl --context=arn:aws:eks:us-east-2:881490111807:cluster/dev"
+
+alias hdev="helm --kube-context arn:aws:eks:us-east-2:703198869937:cluster/dev"
+alias hgreen="helm --kube-context arn:aws:eks:us-west-2:629432362190:cluster/prod-green"
+alias hblue="helm --kube-context arn:aws:eks:us-east-2:629432362190:cluster/prod"
+alias hstone="helm --kube-context arn:aws:eks:us-east-2:881490111807:cluster/dev"
+
 source ~/.env.sh
 
-#export NVM_DIR="/Users/kaj/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-#export PATH="/usr/local/opt/openssl/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -136,13 +143,21 @@ fi
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/kaj/src/odzyskator-go/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/kaj/src/odzyskator-go/node_modules/tabtab/.completions/slss.zsh
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/opt/homebrew/opt/bc/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/kaj/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kaj/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+plugin=(
+  pyenv
+)
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/kaj/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kaj/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-complete -F __start_kubectl k
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PYTHON3_HOST_PROG=~/.venvs/nvim/bin/python
