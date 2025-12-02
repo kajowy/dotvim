@@ -69,7 +69,7 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colorize github jira vagrant virtualenv pip python brew macos iterm2)
+plugins=(git colorize github jira vagrant virtualenv pip python brew macos iterm2 zsh-completions zsh-autosuggestions)
 
 # User configuration
 
@@ -104,20 +104,25 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #alias vim="/usr/local/bin/vim"
 #alias vi="/usr/local/bin/vim"
-alias k="kubectl"
+alias k="k9s --kubeconfig ~/.kube/config-tunnel"
 alias g="git"
 alias vi="nvim"
 alias vim="nvim"
 alias top="top -o cpu"
-alias kdev="kubectl --context=arn:aws:eks:us-east-2:703198869937:cluster/dev"
-alias kgreen="kubectl --context=arn:aws:eks:us-west-2:629432362190:cluster/prod-green"
-alias kblue="kubectl --context=arn:aws:eks:us-east-2:629432362190:cluster/prod"
-alias kstone="kubectl --context=arn:aws:eks:us-east-2:881490111807:cluster/dev"
 
-alias hdev="helm --kube-context arn:aws:eks:us-east-2:703198869937:cluster/dev"
-alias hgreen="helm --kube-context arn:aws:eks:us-west-2:629432362190:cluster/prod-green"
-alias hblue="helm --kube-context arn:aws:eks:us-east-2:629432362190:cluster/prod"
-alias hstone="helm --kube-context arn:aws:eks:us-east-2:881490111807:cluster/dev"
+alias rai-multi-tunnel="/Users/rafal.molak/scripts/multi-tunnel.sh --profile reedai --prod-profile reedai-prod"
+alias rai-set-version="/Users/rafal.molak/scripts/set_version.sh"
+alias rai-sync-envs="/Users/rafal.molak/scripts/sync_envs.sh"
+alias rai-tunnel="/Users/rafal.molak/git/rai-infra/aws-vpc-tunnel.sh"
+alias rai-envs-drifter="KUBECONFIG=~/.kube/config-tunnel /Users/rafal.molak/scripts/envs_drifter.sh"
+alias rai-pr-details="/Users/rafal.molak/scripts/rai-pr-details.sh"
+alias rai-trivy-scan="/Users/rafal.molak/scripts/scan_k8s.sh -n rai -e rai-populate-db,rai-postcodesio-db,rai-postcodesio-api,rai-match-calculator,rai-db-update"
+
+alias kdev="kubectl --kubeconfig ~/.kube/config-tunnel --context dev"
+alias ktest="kubectl --kubeconfig ~/.kube/config-tunnel --context test"
+alias kuat="kubectl --kubeconfig ~/.kube/config-tunnel --context uat"
+
+alias kprod="kubectl --kubeconfig ~/.kube/config-tunnel --context prod"
 
 source ~/.env.sh
 
@@ -132,10 +137,11 @@ source ~/.env.sh
 [[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
+if [[ -n "$PS1" && -z "$NVIM" ]]; then
+  [ -s "$BASE16_SHELL/profile_helper.sh" ] && source "$BASE16_SHELL/profile_helper.sh"
+fi
+        
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
@@ -146,18 +152,79 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 export PATH="/opt/homebrew/opt/bc/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
 
 plugin=(
   pyenv
 )
 
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 export PYTHON3_HOST_PROG=~/.venvs/nvim/bin/python
+export PYENV_ROOT="$HOME/.pyenv"
+
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(saml2aws --completion-script-zsh)"
+
+export PRE_COMMIT_COLOR=always
+
+# FZF file search with Ctrl+F
+bindkey -r '^F'               # usuwamy ewentualne poprzednie mapowanie
+bindkey '^F' fzf-file-widget
+
+fzf_ag() {
+  local query file
+  query=$(printf "" | fzf --prompt='Ag search: ' --print-query --no-sort --no-preview --height=10%)
+  [[ -z "$query" ]] && return
+
+  file=$(ag --nobreak --nonumbers "$query" \
+    | fzf --ansi \
+          --preview "bat --style=numbers --color=always {1} || cat {1}" \
+          --delimiter ':' \
+          --preview-window=right:60%) \
+    && nvim "$(echo "$file" | cut -d':' -f1)"
+}
+
+
+fzf_ag_widget() {
+  zle -I
+  fzf_ag
+  zle reset-prompt
+}
+zle -N fzf_ag_widget
+bindkey '^G' fzf_ag_widget
+
+# Added by Windsurf
+export PATH="/Users/rafal.molak/.codeium/windsurf/bin:$PATH"
+
+export DOCKER_HOST=unix:///Users/rafal.molak/.colima/default/docker.sock
+
+# Python scripts with dedicated environment
+rai-sync-envs-py() {
+    (cd ~/scripts && pyenv exec python sync_envs.py "$@")
+}
+
+rai-queues() {
+    (cd ~/scripts && pyenv exec python queues.py "$@")
+}
+
+rai-test-sync-envs() {
+    (cd ~/scripts && pyenv exec python -m pytest test_sync_envs.py "$@")
+}
+alias gspa="git stash && git pull && git stash apply"
+unalias gg 2>/dev/null
+function gg() { git branch --set-upstream-to=origin/$(git branch --show-current) 2>/dev/null; git pull; }
+export DOCKER_HOST=unix:///Users/rafal.molak/.colima/default/docker.sock
+export PATH="/Users/rafal.molak/.local/bin:$PATH"
+
+
+
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"

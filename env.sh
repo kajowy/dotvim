@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # PATH
-export PATH="/usr/local/go/bin:/usr/local/opt/python/libexec/bin:$PATH"
+export PATH="$HOME/bin:/usr/local/go/bin:/usr/local/opt/python/libexec/bin:$PATH"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 # export PYTHONPATH=$PYTHONPATH
